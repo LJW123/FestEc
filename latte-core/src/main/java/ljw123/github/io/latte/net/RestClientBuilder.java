@@ -2,6 +2,7 @@ package ljw123.github.io.latte.net;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import ljw123.github.io.latte.net.callback.IError;
@@ -26,6 +27,7 @@ public class RestClientBuilder {
     private RequestBody mBody;
     private Context mContext;
     private LoaderStyle mLoaderStyle;
+    private File mFile;
 
     /**
      * 不带修饰符 同包内可以使用new关键字 不同包不能使用new关键字
@@ -38,11 +40,13 @@ public class RestClientBuilder {
         return this;
     }
 
-    public RestClientBuilder loader(Context context,LoaderStyle loaderStyle) {
+    public RestClientBuilder loader(Context context, LoaderStyle loaderStyle) {
         mContext = context;
         mLoaderStyle = loaderStyle;
         return this;
-    }  public RestClientBuilder loader(Context context) {
+    }
+
+    public RestClientBuilder loader(Context context) {
         mContext = context;
         mLoaderStyle = LatteLoader.getDefaultType();
         return this;
@@ -50,6 +54,16 @@ public class RestClientBuilder {
 
     public RestClientBuilder params(WeakHashMap<String, Object> params) {
         PARAMS.putAll(params);
+        return this;
+    }
+
+    public RestClientBuilder file(File file) {
+        mFile = file;
+        return this;
+    }
+
+    public RestClientBuilder file(String filePath) {
+        mFile = new File(filePath);
         return this;
     }
 
@@ -84,6 +98,6 @@ public class RestClientBuilder {
     }
 
     public RestClient build() {
-        return new RestClient(mUrl, PARAMS, mRequest, mSuccess, mFailure, mError, mBody, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mRequest, mSuccess, mFailure, mError, mBody,mFile, mContext, mLoaderStyle);
     }
 }

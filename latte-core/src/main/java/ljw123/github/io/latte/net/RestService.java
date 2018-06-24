@@ -3,8 +3,10 @@ package ljw123.github.io.latte.net;
 import java.util.WeakHashMap;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -23,6 +25,7 @@ import retrofit2.http.Url;
 public interface RestService {
     /**
      * GET方法请求
+     *
      * @param url
      * @param params
      * @return
@@ -32,6 +35,7 @@ public interface RestService {
 
     /**
      * POST请求
+     *
      * @param url
      * @param params
      * @return
@@ -40,8 +44,12 @@ public interface RestService {
     @POST
     Call<String> post(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
+    @POST
+    Call<String> postRaw(@Url String url, @Body RequestBody body);
+
     /**
      * PUT请求
+     *
      * @param url
      * @param params
      * @return
@@ -50,8 +58,12 @@ public interface RestService {
     @PUT
     Call<String> put(@Url String url, @FieldMap WeakHashMap<String, Object> params);
 
+    @PUT
+    Call<String> putRaw(@Url String url, @Body RequestBody body);
+
     /**
      * DELETE请求
+     *
      * @param url
      * @param params
      * @return
@@ -61,6 +73,7 @@ public interface RestService {
 
     /**
      * 下载
+     *
      * @param url
      * @param params
      * @return
@@ -71,6 +84,7 @@ public interface RestService {
 
     /**
      * 上传
+     *
      * @param url
      * @param file
      * @return

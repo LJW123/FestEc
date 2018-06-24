@@ -2,6 +2,7 @@ package ljw123.github.io.latte.net;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import ljw123.github.io.latte.net.callback.IError;
@@ -11,6 +12,8 @@ import ljw123.github.io.latte.net.callback.ISuccess;
 import ljw123.github.io.latte.net.callback.RequestCallback;
 import ljw123.github.io.latte.ui.LatteLoader;
 import ljw123.github.io.latte.ui.LoaderStyle;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
@@ -28,6 +31,7 @@ public class RestClient {
     private final RequestBody BODY;
     private final Context CONTEXT;
     private final LoaderStyle LOADERSTYLE;
+    private final File FILE;
 
     RestClient(String url,
                WeakHashMap<String, Object> params,
@@ -36,11 +40,13 @@ public class RestClient {
                IFailure failure,
                IError error,
                RequestBody body,
+               File file,
                Context context,
                LoaderStyle loaderStyle) {
         this.URL = url;
         this.CONTEXT = context;
         this.LOADERSTYLE = loaderStyle;
+        FILE = file;
 //        TODO 参数  静态的 每次都putAll 不会造成参数异常吗?
         PARAMS.putAll(params);
         this.REQUEST = request;
@@ -74,11 +80,22 @@ public class RestClient {
             case POST:
                 call = restService.post(URL, PARAMS);
                 break;
+            case POST_RAW:
+                call = restService.postRaw(URL, BODY);
+                break;
             case PUT:
                 call = restService.put(URL, PARAMS);
                 break;
+            case PUT_RAW:
+                call = restService.putRaw(URL, BODY);
+                break;
             case DELETE:
                 call = restService.delete(URL, PARAMS);
+                break;
+            case UPLOAD:
+                RequestBody requestBody = RequestBody.create(MediaType.parse(MultipartBody.FORM.toString()), FILE);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file", FILE.getName(),requestBody);
+                restService.upload(URL, part);
                 break;
             default:
                 break;
@@ -94,11 +111,25 @@ public class RestClient {
     }
 
     public final void post() {
-        request(HttpMethod.POST);
+        if (BODY == null) {
+            request(HttpMethod.POST);
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException(" params must be null");
+            }
+            request(HttpMethod.POST_RAW);
+        }
     }
 
     public final void put() {
-        request(HttpMethod.PUT);
+        if (BODY == null) {
+            request(HttpMethod.PUT);
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException(" params must be null");
+            }
+            request(HttpMethod.PUT_RAW);
+        }
     }
 
     public final void delete() {
