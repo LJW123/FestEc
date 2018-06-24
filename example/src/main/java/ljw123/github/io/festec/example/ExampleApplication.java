@@ -17,6 +17,7 @@ public class ExampleApplication extends Application {
         super.onCreate();
         Latte.init(this)
 //                .withApiHost("127.0.0.1/")
+                .withApiHost("http://www.baidu.com")
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontEcModule())
                 .configure();
