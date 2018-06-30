@@ -2,6 +2,7 @@ package ljw123.github.io.latte.app;
 
 /**
  * @author xiaofo on 2018/6/21.
+ * ss
  */
 
 public enum ConfigType {

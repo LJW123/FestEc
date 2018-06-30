@@ -1,10 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ljw123.github.io.latte" >
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="ljw123.github.io.latte">
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:supportsRtl="true" >
-
+        android:supportsRtl="true">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="ljw123.github.io.latte.myfileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="myfileprovider"
+                android:resource="@xml/myfileprovider" />
+        </provider>
     </application>
+
 </manifest>

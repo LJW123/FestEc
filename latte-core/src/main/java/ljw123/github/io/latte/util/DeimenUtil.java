@@ -16,7 +16,7 @@ public class DeimenUtil {
      * @return 屏幕宽度 单位:像素
      */
     public static int getScreenWidth() {
-        Resources resources = Latte.getApplication().getResources();
+        Resources resources = Latte.getApplicationContext().getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
@@ -27,7 +27,7 @@ public class DeimenUtil {
      * @return 屏幕高度 单位:像素
      */
     public static int getScreenHeight() {
-        Resources resources = Latte.getApplication().getResources();
+        Resources resources = Latte.getApplicationContext().getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         return displayMetrics.heightPixels;
     }

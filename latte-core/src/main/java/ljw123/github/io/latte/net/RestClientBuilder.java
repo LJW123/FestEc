@@ -19,20 +19,38 @@ import okhttp3.RequestBody;
 
 public class RestClientBuilder {
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
-    private String mUrl;
-    private IRequest mRequest;
-    private ISuccess mSuccess;
-    private IFailure mFailure;
-    private IError mError;
-    private RequestBody mBody;
-    private Context mContext;
-    private LoaderStyle mLoaderStyle;
-    private File mFile;
+    private String mUrl = null;
+    private IRequest mRequest = null;
+    private ISuccess mSuccess = null;
+    private IFailure mFailure = null;
+    private IError mError = null;
+    private RequestBody mBody = null;
+    private Context mContext = null;
+    private LoaderStyle mLoaderStyle = null;
+    private File mFile = null;
+    private String mDownloadDir = null;
+    private String mExtension = null;
+    private String mName = null;
 
     /**
      * 不带修饰符 同包内可以使用new关键字 不同包不能使用new关键字
      */
     RestClientBuilder() {
+    }
+
+    public RestClientBuilder downloadDir(String downloadDir) {
+        mDownloadDir = downloadDir;
+        return this;
+    }
+
+    public RestClientBuilder mExtension(String extension) {
+        mExtension = extension;
+        return this;
+    }
+
+    public RestClientBuilder name(String name) {
+        mName = name;
+        return this;
     }
 
     public RestClientBuilder url(String url) {
@@ -98,6 +116,7 @@ public class RestClientBuilder {
     }
 
     public RestClient build() {
-        return new RestClient(mUrl, PARAMS, mRequest, mSuccess, mFailure, mError, mBody,mFile, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mRequest, mSuccess, mFailure, mError, mBody, mFile,
+                mContext, mLoaderStyle, mDownloadDir, mExtension, mName);
     }
 }

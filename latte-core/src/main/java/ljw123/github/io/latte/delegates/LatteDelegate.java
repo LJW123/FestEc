@@ -11,7 +11,7 @@ import ljw123.github.io.latte.app.Latte;
 
 public abstract class LatteDelegate extends PermissionCheckerDelegate {
    public void showToast(String msg){
-        Toast.makeText((Context) Latte.getApplication(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText( Latte.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
     }
 }
